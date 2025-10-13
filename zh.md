@@ -1,9 +1,16 @@
 # 比特币：一种点对点的电子现金系统
 
-​								作者：中本聪
-​								satoshin@gmx.com
-​								www.bitcoin.org 
-​								2008.10.31
+作者：中本聪
+satoshin@gmx.com
+www.bitcoin.org 
+2008.10.31
+
+中文翻译：Liz
+特别鸣谢：李笑来
+liz041218888@gmail.com
+2025.6.13 - 7.20
+
+[Checkout Github Repo for this translation](https://github.com/Lizevolving/bitcoin-whitepaper-chinese-translation-2025)
 
 
 
