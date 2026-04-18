@@ -1,218 +1,635 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- 纯代码生成的 Bitcoin SVG Icon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23B85D19'/><path d='M21.66 14.8c.36-2.43-1.49-3.73-3.99-4.58l.81-3.26-1.99-.5-.8 3.22c-.52-.13-1.06-.26-1.6-.39l.81-3.23-1.99-.5-.81 3.25c-.44-.1-.87-.2-1.28-.3l-2.73-.68-.53 2.12s1.47.34 1.44.36c.8.2.94.73.91 1.15l-.91 3.66c.06.01.13.04.22.1-.07-.02-.15-.04-.24-.06l-1.28 5.12c-.1.25-.33.62-.88.48.02.01-1.44-.36-1.44-.36l-.99 2.27 2.58.64c.48.12.94.24 1.41.36l-.82 3.32 1.99.5.81-3.27c.55.15 1.08.28 1.6.4l-.81 3.25 1.99.5.82-3.3c3.42.65 6.01.39 6.94-2.69.75-2.48-.05-3.92-1.84-4.85 1.31-.3 2.3-1.16 2.55-2.95zm-2.64 5.56c-.53 2.15-4.13 1.01-5.3 .72l.94-3.79c1.17.29 4.93.81 4.36 3.07zm.53-5.46c-.48 1.94-3.41.95-4.36.71l.85-3.42c.95.24 4.02.66 3.51 2.71z' fill='%23FFF'/></svg>">
-  <title>比特币白皮书 (2025版) | Bitcoin Whitepaper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="description" content="比特币白皮书中文翻译，Liz 译。" />
+  <meta name="theme-color" content="#c86a22" />
 
-  <!-- 引入 Markdown-it 及其脚注插件 -->
-  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13.0.1/dist/markdown-it.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/markdown-it-footnote@3.0.3/dist/markdown-it-footnote.min.js"></script>
+  <title>比特币白皮书中文翻译 | Liz</title>
 
-  <!-- 配置 MathJax 以支持 LaTeX 数学公式 -->
+  <!-- 更像 Bitcoin 的 favicon -->
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23F7931A'/%3E%3Cpath d='M21.5 13.5c.5-3.3-2-4.6-5.4-5.4l1.1-4.4-2.7-.7-1.1 4.3c-.7-.2-1.4-.3-2.2-.5l1.1-4.4-2.7-.7-1.1 4.5c-.6-.1-1.1-.3-1.6-.4l-3.3-.8-.6 2.6s1.8.4 1.7.4c1 .2 1.1.8 1.1 1.3l-1.1 4.4c.1 0 .2.1.3.1l-.3-.1-1.6 6.3c-.1.3-.4.8-1.2.6.1 0-1.8-.4-1.8-.4l-1.2 2.8 3.1.8c.6.2 1.2.3 1.8.5l-1.1 4.5 2.7.7 1.1-4.4c.7.2 1.4.4 2.1.5l-1.1 4.5 2.7.7 1.1-4.6c3.9.7 6.8.4 8-3 1-2.4-.1-3.7-1.7-4.6 1.2-.3 2.1-1 2.3-2.6zm-4.3 6c-.7 2.8-5.3 1.3-6.8.9l1.2-4.9c1.5.4 6.4 1.1 5.6 4zm.6-5.3c-.6 2.5-4.4 1.2-5.7.9l1.1-4.4c1.2.3 5.3 1 4.6 3.5z' fill='%23FFF'/%3E%3C/svg%3E"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.9.0/github-markdown-light.css"
+  />
+
   <script>
     window.MathJax = {
-      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
-      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] },
-      startup: { typeset: false } // 禁用自动渲染，等 markdown 加载完手动触发
+      loader: { load: ["[tex]/noerrors"] },
+      tex: {
+        packages: { "[+]": ["noerrors"] },
+        inlineMath: [["$", "$"], ["\\(", "\\)"]],
+        displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      },
+      svg: { fontCache: "global" },
+      startup: { typeset: false }
     };
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.1/dist/markdown-it.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/markdown-it-footnote@4.0.0/dist/markdown-it-footnote.min.js"></script>
 
   <style>
-    /* 【视觉设定：极简密码朋克 / 清爽废土风】 */
     :root {
-      --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-      --font-mono: "JetBrains Mono", Consolas, monospace;
-      
-      --color-bg: #EAE8E3;         /* 混凝土沙灰色 */
-      --color-paper: #FDFCF9;      /* 做旧纸草白 */
-      --color-text: #2B2B2A;       /* 深碳灰 */
-      --color-text-muted: #6B6960; 
-      --color-accent: #D45D00;     /* 铁锈橙 (融合比特币橙与废土红) */
-      --color-border: #D1CDC2;     
-      --color-blockquote: #F3F1EC; /* 引用区块底色 */
+      --bg: #e7e0d2;
+      --bg-grid: rgba(128, 53, 20, 0.05);
+      --paper: #faf6ee;
+      --paper-soft: #f2ecdf;
+      --ink: #241f18;
+      --muted: #6f675a;
+      --accent: #c86a22;
+      --accent-dark: #8b4318;
+      --line: #cabda5;
+      --line-dark: #a08e73;
+      --code-bg: #eee4d2;
+      --shadow: rgba(36, 31, 24, 0.12);
+      --mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: var(--font-body);
-      background-color: var(--color-bg);
-      /* 极弱的工业网格背景 */
-      background-image: linear-gradient(rgba(209,205,194,0.3) 1px, transparent 1px), 
-                        linear-gradient(90deg, rgba(209,205,194,0.3) 1px, transparent 1px);
-      background-size: 20px 20px;
       margin: 0;
-      padding: 3rem 1rem;
-      color: var(--color-text);
-      font-size: 16px;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
+      color: var(--ink);
+      font-family: var(--body);
+      background:
+        radial-gradient(var(--bg-grid) 1px, transparent 1px),
+        var(--bg);
+      background-size: 24px 24px;
+    }
+
+    .shell {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 30px 18px 56px;
+    }
+
+    .site-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .coin {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 4px 10px rgba(139, 67, 24, 0.22));
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .top-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 8px 10px;
+      border: 1px solid rgba(139, 67, 24, 0.22);
+      background: rgba(250, 246, 238, 0.72);
+      backdrop-filter: blur(2px);
+    }
+
+    .top-link:hover {
+      color: var(--accent);
+      border-color: rgba(139, 67, 24, 0.45);
+    }
+
+    .doc {
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--accent);
+      box-shadow: 0 18px 45px var(--shadow);
+    }
+
+    .doc-badge {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      z-index: 1;
+      color: #9c9488;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      user-select: none;
+      pointer-events: none;
     }
 
     .markdown-body {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 4rem 5rem;
-      background: var(--color-paper);
-      border-radius: 2px;
-      /* 顶部信号条设计 */
-      border-top: 4px solid var(--color-accent);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.08);
+      max-width: none;
+      min-width: 0;
+      position: relative;
+      padding: 44px 56px 52px;
+      color: var(--ink);
+      background: transparent;
     }
 
-    /* 标题排版：硬朗直接 */
-    .markdown-body h1 { 
-      font-size: 2.4rem; 
+    .markdown-body h1 {
       margin-top: 0;
-      padding-bottom: 1rem; 
-      border-bottom: 2px solid var(--color-border);
-      letter-spacing: -0.02em;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 31px;
+      line-height: 1.35;
+      color: #16120d;
+      font-weight: 850;
     }
-    
-    .markdown-body h2 { 
-      font-size: 1.5rem; 
-      margin: 3.5rem 0 1.5rem 0; 
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
+
+    .markdown-body h2 {
+      margin-top: 42px;
+      margin-bottom: 18px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
+      font-size: 22px;
+      line-height: 1.45;
+      color: #1c1712;
+      font-weight: 780;
     }
-    
-    /* 标题前加入一个废土风的指示块 */
+
     .markdown-body h2::before {
       content: "";
       display: inline-block;
-      width: 12px;
-      height: 12px;
-      background-color: var(--color-accent);
-      margin-right: 12px;
+      width: 8px;
+      height: 8px;
+      margin-right: 10px;
+      background: var(--accent);
+      transform: translateY(-2px);
     }
 
-    .markdown-body h3 { font-size: 1.2rem; margin: 2.5rem 0 1rem 0; color: #111; }
-
-    /* 文本与链接 */
-    .markdown-body p { margin: 0 0 1.5em 0; text-align: justify; }
-    .markdown-body a { 
-      color: var(--color-accent); 
-      text-decoration: none; 
-      border-bottom: 1px solid rgba(212, 93, 0, 0.3);
-      transition: border-color 0.2s;
+    .markdown-body h3 {
+      margin-top: 30px;
+      color: #2b241b;
+      font-weight: 760;
     }
-    .markdown-body a:hover { border-bottom-color: var(--color-accent); }
 
-    /* 重点与代码 */
-    .markdown-body strong { font-weight: 600; color: #000; }
-    .markdown-body code {
-      font-family: var(--font-mono);
-      background: rgba(0,0,0,0.05);
-      padding: 0.2em 0.4em;
+    .markdown-body p,
+    .markdown-body li {
+      color: var(--ink);
+      line-height: 1.84;
+      font-size: 16px;
+    }
+
+    .markdown-body a {
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(139, 67, 24, 0.3);
+    }
+
+    .markdown-body a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .markdown-body blockquote {
+      margin: 1.2em 0;
+      color: #4f473a;
+      background: var(--paper-soft);
+      border-left: 4px solid var(--accent);
+      border-radius: 0;
+    }
+
+    .markdown-body hr {
+      height: 1px;
+      margin: 34px 0;
+      background: transparent;
+      border: 0;
+      border-top: 1px dashed var(--line-dark);
+    }
+
+    .markdown-body table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      border-collapse: collapse;
+    }
+
+    .markdown-body table th,
+    .markdown-body table td {
+      white-space: nowrap;
+    }
+
+    .markdown-body img {
+      display: block;
+      max-width: 100%;
+      margin: 28px auto;
+      padding: 14px;
+      background: #fbf5e8;
+      border: 1px solid var(--line);
+    }
+
+    .markdown-body pre {
+      padding: 16px;
+      overflow: auto;
+      background: var(--code-bg);
+      border: 1px solid var(--line);
       border-radius: 2px;
-      font-size: 0.9em;
     }
 
-    /* 引用块（极其适合中英对照中的英文原文展示） */
-    .markdown-body blockquote { 
-      margin: 2rem 0; 
-      padding: 1rem 1.5rem; 
-      color: var(--color-text-muted); 
-      background: var(--color-blockquote); 
-      border-left: 4px solid var(--color-border); 
+    .markdown-body code,
+    .markdown-body pre,
+    .markdown-body pre code {
+      font-family: var(--mono);
     }
-    .markdown-body blockquote p:last-child { margin-bottom: 0; }
 
-    /* 脚注样式优化 (MathJax & Markdown-it) */
+    .markdown-body code {
+      background: var(--code-bg);
+      border-radius: 2px;
+    }
+
+    .markdown-body pre code {
+      background: transparent;
+      white-space: pre;
+    }
+
     .footnotes {
-      margin-top: 4rem;
-      padding-top: 1rem;
-      border-top: 1px dashed var(--color-border);
-      font-size: 0.9em;
-      color: var(--color-text-muted);
+      margin-top: 52px;
+      padding-top: 22px;
+      border-top: 2px dashed var(--line);
+      color: var(--muted);
+      font-size: 14px;
     }
-    .footnote-ref a { text-decoration: none; border: none; color: var(--color-accent); font-weight: bold;}
-    .footnote-backref { font-family: var(--font-mono); text-decoration: none; border: none !important;}
 
-    /* 终端加载动画 */
-    .terminal-loading { 
-      font-family: var(--font-mono); 
-      text-align: center; 
-      color: var(--color-accent); 
-      padding: 100px 0; 
-      font-size: 0.95rem;
+    .footnote-ref a {
+      color: var(--accent-dark);
+      border-bottom: 0;
+      font-family: var(--mono);
+      font-weight: 800;
+      padding: 0 2px;
     }
-    .blink { animation: blink 1s step-end infinite; }
-    @keyframes blink { 50% { opacity: 0; } }
 
-    /* 移动端极简适配 */
-    @media (max-width: 768px) {
-      body { padding: 0; background: var(--color-bg); }
-      .markdown-body { 
-        padding: 2rem 1.5rem; 
-        border-radius: 0; 
-        box-shadow: none; 
-        border-top-width: 3px;
+    .footnotes ol {
+      padding-left: 1.4em;
+    }
+
+    mjx-container[jax="SVG"][display="true"] {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 10px 0;
+    }
+
+    .state {
+      padding: 54px 24px;
+      text-align: center;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+
+    .state strong {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--accent-dark);
+      font-family: var(--body);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .state .cursor {
+      animation: blink 1s step-end infinite;
+    }
+
+    .state-actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-family: var(--body);
+    }
+
+    .state-actions a {
+      display: inline-block;
+      padding: 10px 14px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 750;
+      background: var(--accent);
+      border: 1px solid var(--accent-dark);
+    }
+
+    .state-actions a.alt {
+      color: var(--accent-dark);
+      background: transparent;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        background-size: 18px 18px;
       }
-      .markdown-body h1 { font-size: 1.8rem; }
-      .markdown-body h2 { font-size: 1.3rem; }
+
+      .shell {
+        padding: 18px 10px 36px;
+      }
+
+      .site-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .actions {
+        justify-content: flex-start;
+      }
+
+      .doc-badge {
+        display: none;
+      }
+
+      .markdown-body {
+        padding: 28px 20px 34px;
+      }
+
+      .markdown-body h1 {
+        font-size: 24px;
+      }
+
+      .markdown-body h2 {
+        font-size: 19px;
+      }
+
+      .markdown-body p,
+      .markdown-body li {
+        font-size: 15px;
+        line-height: 1.78;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div id="content" class="markdown-body">
-    <!-- 极客风加载状态 -->
-    <div class="terminal-loading">
-      [ SYNCING GENESIS BLOCK ]<br><br>
-      FETCHING DOCUMENT: zh.md <span class="blink">_</span>
-    </div>
+  <div class="shell">
+    <header class="site-head">
+      <div class="brand">
+        <svg class="coin" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="16" fill="#F7931A"></circle>
+          <path d="M21.5 13.5c.5-3.3-2-4.6-5.4-5.4l1.1-4.4-2.7-.7-1.1 4.3c-.7-.2-1.4-.3-2.2-.5l1.1-4.4-2.7-.7-1.1 4.5c-.6-.1-1.1-.3-1.6-.4l-3.3-.8-.6 2.6s1.8.4 1.7.4c1 .2 1.1.8 1.1 1.3l-1.1 4.4c.1 0 .2.1.3.1l-.3-.1-1.6 6.3c-.1.3-.4.8-1.2.6.1 0-1.8-.4-1.8-.4l-1.2 2.8 3.1.8c.6.2 1.2.3 1.8.5l-1.1 4.5 2.7.7 1.1-4.4c.7.2 1.4.4 2.1.5l-1.1 4.5 2.7.7 1.1-4.6c3.9.7 6.8.4 8-3 1-2.4-.1-3.7-1.7-4.6 1.2-.3 2.1-1 2.3-2.6zm-4.3 6c-.7 2.8-5.3 1.3-6.8.9l1.2-4.9c1.5.4 6.4 1.1 5.6 4zm.6-5.3c-.6 2.5-4.4 1.2-5.7.9l1.1-4.4c1.2.3 5.3 1 4.6 3.5z" fill="#ffffff"></path>
+        </svg>
+        <div class="brand-copy">
+          <p class="brand-title">比特币白皮书中文翻译</p>
+          <p class="brand-subtitle">A Peer-to-Peer Electronic Cash System · Liz 译</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a
+          class="top-link"
+          href="https://github.com/Lizevolving/bitcoin-whitepaper-chinese-translation-2025"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub Repo
+        </a>
+        <a
+          class="top-link"
+          href="https://raw.githubusercontent.com/Lizevolving/bitcoin-whitepaper-chinese-translation-2025/main/zh.md"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Raw zh.md
+        </a>
+      </div>
+    </header>
+
+    <main class="doc">
+      <div class="doc-badge">GENESIS-BLOCK-ARCHIVE // DECLASSIFIED</div>
+
+      <article id="content" class="markdown-body">
+        <div class="state">
+          <strong>[ SYNCING WITH BLOCKCHAIN ]</strong>
+          DECRYPTING LOCAL ARCHIVE: zh.md <span class="cursor">█</span>
+        </div>
+      </article>
+    </main>
   </div>
 
   <script>
-    const contentDiv = document.getElementById('content');
+    const CONFIG = {
+      repo: "Lizevolving/bitcoin-whitepaper-chinese-translation-2025",
+      branch: "main",
+      entry: "zh.md",
 
-    // 初始化 markdown-it，并挂载脚注插件
-    const md = window.markdownit({
-      html: true,
-      linkify: true,
-      typography: true
-    }).use(window.markdownitFootnote);
+      /**
+       * 如果你的 markdown 里故意写了原生 HTML，再改成 true。
+       * 对纯文档展示来说，false 更稳。
+       */
+      allowHtmlInMarkdown: false
+    };
 
-    // 获取根目录下的 zh.md
-    fetch('zh.md')
-      .then(response => {
-        if (!response.ok) throw new Error('Document fetch failed');
-        return response.text();
-      })
-      .then(text => {
-        // 1. 将 Markdown 解析为 HTML
-        contentDiv.innerHTML = md.render(text);
-        
-        // 2. 通知 MathJax 扫描并渲染刚刚插入的数学公式
-        if (window.MathJax && window.MathJax.typesetPromise) {
-          window.MathJax.typesetPromise([contentDiv]).catch(function (err) {
-            console.error('MathJax rendering error:', err.message);
-          });
-        }
-      })
-      .catch(error => {
-        // 降级防失联：提示去 GitHub 查看原文件
-        contentDiv.innerHTML = `
-          <div style="text-align:center; padding: 3rem 0; font-family: var(--font-mono);">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-accent);">[ 404 ]</div>
-            <h2 style="border:none; margin-bottom: 1rem;">节点同步失败</h2>
-            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">
-              无法在当前环境抓取到 zh.md 文件。<br>
-              请直接访问代码仓库查看原生 Markdown。
-            </p>
-            <a href="https://github.com/Lizevolving/bitcoin-whitepaper-chinese-translation-2025/blob/main/zh.md" target="_blank"
-               style="display: inline-block; padding: 10px 20px; background: var(--color-text); color: var(--color-paper); text-decoration: none; font-size: 0.9rem;">
-               > 强制连接至 GitHub 节点
-            </a>
+    const RAW_BASE = `https://raw.githubusercontent.com/${CONFIG.repo}/${CONFIG.branch}/`;
+    const REPO_URL = `https://github.com/${CONFIG.repo}`;
+    const RAW_DOC_URL = `${RAW_BASE}${CONFIG.entry}`;
+
+    const DOC_SOURCES = [
+      {
+        url: CONFIG.entry,
+        assetBase: new URL(".", location.href).href
+      },
+      {
+        url: RAW_DOC_URL,
+        assetBase: RAW_BASE
+      }
+    ];
+
+    window.addEventListener("DOMContentLoaded", init);
+
+    async function init() {
+      const content = document.getElementById("content");
+
+      try {
+        assertDeps();
+        const doc = await fetchMarkdown();
+        const source = preprocessMarkdown(doc.text);
+        content.innerHTML = renderMarkdown(source, doc.assetBase);
+        await typesetMath(content);
+      } catch (error) {
+        console.error(error);
+        content.innerHTML = `
+          <div class="state">
+            <strong>[ SIGNAL LOST ]</strong>
+            未能读取 zh.md。请确认 <code>index.html</code> 与 <code>zh.md</code> 位于同一目录，
+            或直接访问备用节点。
+            <div class="state-actions">
+              <a href="${RAW_DOC_URL}" target="_blank" rel="noopener noreferrer">打开 Raw zh.md</a>
+              <a class="alt" href="${REPO_URL}" target="_blank" rel="noopener noreferrer">打开 GitHub Repo</a>
+            </div>
           </div>
         `;
-        console.error('Fetch error:', error);
+      }
+    }
+
+    function assertDeps() {
+      if (!window.markdownit) {
+        throw new Error("markdown-it failed to load.");
+      }
+      if (!window.markdownitFootnote) {
+        throw new Error("markdown-it-footnote failed to load.");
+      }
+    }
+
+    async function fetchMarkdown() {
+      let lastError = null;
+
+      for (const source of DOC_SOURCES) {
+        try {
+          const response = await fetch(source.url, { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`${response.status} ${source.url}`);
+          }
+
+          const text = await response.text();
+          return {
+            text,
+            assetBase: source.assetBase
+          };
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error("No markdown source available.");
+    }
+
+    function createRenderer() {
+      const md = window.markdownit({
+        html: CONFIG.allowHtmlInMarkdown,
+        linkify: true,
+        breaks: false,
+        typographer: false
+      }).use(window.markdownitFootnote);
+
+      const defaultLinkOpen =
+        md.renderer.rules.link_open ||
+        function(tokens, idx, options, env, self) {
+          return self.renderToken(tokens, idx, options);
+        };
+
+      md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+        const href = token.attrGet("href") || "";
+
+        if (/^https?:\/\//i.test(href)) {
+          token.attrSet("target", "_blank");
+          token.attrSet("rel", "noopener noreferrer");
+        }
+
+        return defaultLinkOpen(tokens, idx, options, env, self);
+      };
+
+      const defaultImage =
+        md.renderer.rules.image ||
+        function(tokens, idx, options, env, self) {
+          return self.renderToken(tokens, idx, options);
+        };
+
+      md.renderer.rules.image = function(tokens, idx, options, env, self) {
+        const token = tokens[idx];
+        const src = token.attrGet("src");
+
+        if (src && !/^(?:[a-z]+:|\/|#)/i.test(src)) {
+          token.attrSet("src", new URL(src, env.assetBase).href);
+        }
+
+        token.attrSet("loading", "lazy");
+        token.attrSet("decoding", "async");
+
+        return defaultImage(tokens, idx, options, env, self);
+      };
+
+      return md;
+    }
+
+    function renderMarkdown(text, assetBase) {
+      const md = createRenderer();
+      return md.render(text, { assetBase });
+    }
+
+    function preprocessMarkdown(source) {
+      let text = source || "";
+
+      text = text
+        .replace(/^\uFEFF/, "")
+        .replace(/\r\n?/g, "\n")
+        .replace(/\u00A0/g, " ")
+        .trim();
+
+      text = normalizeDisplayMath(text);
+
+      return text;
+    }
+
+    function normalizeDisplayMath(source) {
+      return source.replace(/\$\$([\s\S]*?)\$\$/g, (_, tex) => {
+        const cleaned = tex.trim();
+        return `\n\n$$\n${cleaned}\n$$\n\n`;
       });
+    }
+
+    async function typesetMath(container) {
+      if (!window.MathJax || !window.MathJax.typesetPromise) return;
+      await window.MathJax.startup.promise;
+      await window.MathJax.typesetPromise([container]);
+    }
   </script>
 </body>
 </html>
