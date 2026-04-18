@@ -3,7 +3,7 @@
 一份用心打磨、为深度学习者优化的中英对照比特币白皮书。
 
 - **直接阅读**：[zh.md](zh.md)
-- **在线版本**：[网页链接](https://bitcoin-whitepaper-zhtranslation-2025.netlify.app/)
+- **在线版本**：[网页链接](https://lizevolving.github.io/bitcoin-whitepaper-chinese-translation-2025)
 
 > 致所有信奉“不懂不投”，并致力于回归第一性原理的探索者。
 
