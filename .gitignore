@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+build/
+
+# Logs / temp
+*.log
+*.tmp
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+
+# WeChat/miniprogram local/private config
+project.private.config.json

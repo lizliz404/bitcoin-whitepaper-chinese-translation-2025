@@ -74,3 +74,25 @@
 
 把这段黑历史写在这里，是想提醒自己，也提醒看到这里的你：
 **Done is better than perfect.** 别让极客的执念和无谓的完美主义，绑架了真正该做的事。
+
+## What
+
+一份中英对照的比特币白皮书精译版（2025），基于李笑来 2018 年译本，结合 AI 多轮交叉验证优化。提供 Markdown 源文件（`zh.md`）和 GitHub Pages 在线版本。
+
+## Run
+
+- 直接阅读：[zh.md](zh.md)
+- 在线版本：https://lizevolving.github.io/bitcoin-whitepaper-chinese-translation-2025
+- 本地预览：浏览器打开 `index.html`
+
+## Env
+
+No required environment variables.
+
+## Status
+
+Content/static project. Completed.
+
+## License
+
+No license specified yet.
