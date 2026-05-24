@@ -10,7 +10,7 @@ www.bitcoin.org
 liz041218888@gmail.com
 2025.6.13 - 7.20
 
-[Checkout Github Repo for this translation](https://github.com/Lizevolving/bitcoin-whitepaper-chinese-translation-2025)
+[Checkout Github Repo for this translation](https://github.com/lizliz404/bitcoin-whitepaper-chinese-translation-2025)
 
 
 

@@ -1,0 +1,22 @@
+{
+  "name": "比特币白皮书中文翻译 2025",
+  "short_name": "Bitcoin Whitepaper 中文",
+  "description": "《Bitcoin: A Peer-to-Peer Electronic Cash System》中文翻译 2025 版，Liz 译。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#e7e0d2",
+  "theme_color": "#c86a22",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
